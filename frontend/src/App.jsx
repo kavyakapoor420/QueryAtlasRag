@@ -3,6 +3,7 @@ import { ingestFiles, askQuestionStream, login, logout } from "./api.js";
 import Panel from "./components/Panel.jsx";
 import PrimaryButton from "./components/PrimaryButton.jsx";
 import SqaureGridText from "./components/SqaureGrirdText.jsx";
+import NavBar from "./components/NavBar.jsx";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 const SESSION_KEY = "rag_session";
@@ -256,8 +257,10 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-black text-white">
       <GridBackground />
+      
       <div className="pointer-events-none absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       <main className="relative z-10 mx-auto max-w-6xl px-6 py-12">
+       <NavBar/> 
         <header className="mb-10">
           {/* <p className="text-xs uppercase tracking-[0.4em] text-[#8ab4ff]">
             Hybrid Retrieval Platform
