@@ -1,3 +1,5 @@
+#rag-pipeline
+
 import json
 import os
 import uuid
@@ -16,3 +18,24 @@ from app.services.pdf_loader import pdf_to_chunks
 from app.services.retriever import hybrid_search
 from app.utils.config import UPLOADS_DIR
 from app.utils.auth import create_session, remove_session, require_session
+
+
+
+app = FastAPI(title="Hybrid RAG API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+class QueryRequest(BaseModel):
+    question: str
+    top_k: int = 5
+    alpha: float = 0.5
+
+
+class LoginRequest(BaseModel):
+    api_key: str
