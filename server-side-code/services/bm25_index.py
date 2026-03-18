@@ -139,3 +139,5 @@ class BM25Index:
         # Rebuild index
         self.bm25 = BM25Okapi(self.corpus)
         self.save_index()
+
+        
