@@ -1,5 +1,8 @@
 .env
 storage/
 __pycache__/
+<<<<<<< HEAD
 .venv/
 venv/
+=======
+>>>>>>> c7c17ec09a3cf4e15bc2b6596442dda5644c7f1a

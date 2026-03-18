@@ -164,6 +164,7 @@ def query_stream(req: QueryRequest, api_key: str = Depends(require_session)):
         yield "\n[[SOURCES]]" + json.dumps(sources)
 
     return StreamingResponse(generator(), media_type="text/plain")
+<<<<<<< HEAD
 
 
 
@@ -334,3 +335,5 @@ def query_stream(req: QueryRequest, api_key: str = Depends(require_session)):
 #         yield "\n[[SOURCES]]" + json.dumps(sources)
 
 #     return StreamingResponse(generator(), media_type="text/plain")
+=======
+>>>>>>> c7c17ec09a3cf4e15bc2b6596442dda5644c7f1a
