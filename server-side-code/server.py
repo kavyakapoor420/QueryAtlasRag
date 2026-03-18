@@ -1,63 +1,18 @@
-import json 
-import os 
-import uuid 
-from typing import List, Dict, Any
+import json
+import os
+import uuid
+from typing import List
 
-from RAG.backend.app.utils.auth import create_session, remove_session
-from fastapi import FastAPI,UploadFile,File,HTTException,Depends,Header
-from fastapi.responses import StreamingResponse 
-from fastapi.middleware.cors import CORSMiddleware 
-from pydantic import BaseModel 
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Header
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
-app=FastAPI() 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True ,
-    allow_method=["*"],
-    allow_headers=["*"]
-)
-
-
-class QueryRequest(BaseModel):
-    question:str
-    top_k:int=5
-    alpha:float=0.5 
-
-class LoginRequest(BaseModel):
-    api_key:str
-    username:str
-    password:str
-
-
-@app.on_event("startup")
-
-def on_startup():
-    init_db() 
-
-@app.get("/api/health")
-def health():
-    return {"status":"ok"}
-
-@app.post("/api/auth/login")
-def login(req:LoginRequest):
-    validate_api_key(req.api_key)
-    # Here you would normally validate the username and password against your user database
-    # For simplicity, we will just return a success response if the API key is valid
-    session_token=create_session(req.api_key)
-    return {"session_token":session_token}
-
-@app.post("/api/auth/logout")
-def logout(x_api_session:str=Header(None)):
-    if x_api_session:
-        remove_session(x_api_session)
-
-    return {"status":"ok","message":"Logged out successfully"}
-
-
-@app.get('/api/auth/status')
-def status(api_key:str=Depends(require_session)):
-    return {"status":"ok"}
-
-
-@app.post('')
+from app.database.chroma_store import get_chroma_collection
+from app.database.sqlite_store import init_db, insert_document_and_chunks
+from app.services.embeddings import get_embedder
+from app.services.llm import call_gemini, stream_gemini, validate_api_key
+from app.services.pdf_loader import pdf_to_chunks
+from app.services.retriever import hybrid_search
+from app.utils.config import UPLOADS_DIR
+from app.utils.auth import create_session, remove_session, require_session
