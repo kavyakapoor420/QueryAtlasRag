@@ -10,7 +10,8 @@ class Config:
     SQLITE_DB_PATH = os.getenv("SQLITE_DB_PATH", "./metadata.db")
     CHUNK_SIZE = 500
     CHUNK_OVERLAP = 50
-    EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    # EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+    EMBEDDING_MODEL = "models/gemini-embedding-001"
     
     @classmethod
     def validate(cls):

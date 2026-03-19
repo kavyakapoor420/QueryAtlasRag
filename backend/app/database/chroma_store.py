@@ -6,10 +6,6 @@ _chroma_client = None
 _chroma_collection = None
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c7c17ec09a3cf4e15bc2b6596442dda5644c7f1a
 def get_chroma_collection():
     global _chroma_client, _chroma_collection
     if _chroma_client is None:
